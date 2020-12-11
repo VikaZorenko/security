@@ -1,10 +1,9 @@
-import base64
 from single_byte_xor import SingleByteXorAttacker
 from repeating_key_xor import RepeatingKeyXorAttacker
+from substitution import SubstitutionAttacker, Substitution, ALPHABET, IndividualSet, Individual
 
 
-if __name__ == '__main__':
-    # TASK 1
+def execute_task_1():
     print("======TASK 1======")
     task_1 = "Yx`7cen7v7ergrvc~yp:|rn7OXE7t~g.re97R9p97~c7d.xb{s7cv|r7v7dce~yp75.r{{x7`xe{s57vys;7p~ary7c.r7|rn7" \
              "~d75|rn5;7oxe7c.r7q~edc7{rccre75.57`~c.75|5;7c.ry7oxe75r57`~c.75r5;7c.ry75{57`~c.75n5;7vys7c.ry7ox" \
@@ -13,7 +12,8 @@ if __name__ == '__main__':
              "r7urdc7erdb{c9"
     SingleByteXorAttacker.attack(task_1)
 
-    # TASK 2
+
+def execute_task_2():
     print("======TASK 2======")
     task_2 = "1c41023f564b2a130824570e6b47046b521f3f5208201318245e0e6b40022643072e13183e51183f5a1f3e4702245d4b28" \
              "5a1b23561965133f2413192e571e28564b3f5b0e6b50042643072e4b023f4a4b24554b3f5b0238130425564b3c564b3c5a" \
@@ -27,3 +27,72 @@ if __name__ == '__main__':
              "2a500e381d4b23471f3b4051641c0f2450186554042454072e1d08245e442f5c083e5e0e2547442f1c5a0a64123c503e02" \
              "7e040c413428592406521a21420e184a2a32492072000228622e7f64467d512f0e7f0d1a"
     RepeatingKeyXorAttacker.attack(task_2)
+
+
+def execute_task_3():
+    print("======TASK 3======")
+    task_3 = "EFFPQLEKVTVPCPYFLMVHQLUEWCNVWFYGHYTCETHQEKLPVMSAKSPVPAPVYWMVHQLUSPQLYWLASLFVWPQLMVHQLUPLRPSQLULQES" \
+             "PBLWPCSVRVWFLHLWFLWPUEWFYOTCMQYSLWOYWYETHQEKLPVMSAKSPVPAPVYWHEPPLUWSGYULEMQTLPPLUGUYOLWDTVSQETHQEK" \
+             "LPVPVSMTLEUPQEPCYAMEWWYTYWDLUULTCYWPQLSEOLSVOHTLUYAPVWLYGDALSSVWDPQLNLCKCLRQEASPVILSLEUMQBQVMQCYAH" \
+             "UYKEKTCASLFPYFLMVHQLUPQLHULIVYASHEUEDUEHQBVTTPQLVWFLRYGMYVWMVFLWMLSPVTTBYUNESESADDLSPVYWCYAMEWPUCP" \
+             "YFVIVFLPQLOLSSEDLVWHEUPSKCPQLWAOKLUYGMQEUEMPLUSVWENLCEWFEHHTCGULXALWMCEWETCSVSPYLEMQYGPQLOMEWCYAGV" \
+             "WFEBECPYASLQVDQLUYUFLUGULXALWMCSPEPVSPVMSBVPQPQVSPCHLYGMVHQLUPQLWLRPOEDVMETBYUFBVTTPENLPYPQLWLRPTE" \
+             "KLWZYCKVPTCSTESQPQULLGYAUMEHVPETFWMEHVPETBZMEHVPETB"
+    SubstitutionAttacker(individual_set_members_count=1,
+                         min_population_size=100,
+                         max_population_size=1000,
+                         iterations_count=500,
+                         mutations_percentage=0.4,
+                         best_percentage=30).attack(task_3)
+    task_3_b = bytearray(task_3.lower().encode())
+    keys_b = [bytearray('ekmflgdqvzntowyhxuspaibrcj'.encode())]
+    key_set = IndividualSet(Individual)
+    for key in keys_b:
+        key_set.append(Individual(key))
+    print(f"Found keys: {keys_b} with fitness {key_set.calc_fitness(task_3_b)}")
+    print(f"Found text: {Substitution(ALPHABET).decrypt(task_3_b, keys_b)}")
+
+
+def execute_task_4():
+    print("======TASK 4======")
+    task_4 = "KZBWPFHRAFHMFSNYSMNOZYBYLLLYJFBGZYYYZYEKCJVSACAEFLMAJZQAZYHIJFUNHLCGCINWFIHHHTLNVZLSHSVOZDPYSMNYJX" \
+             "HMNODNHPATXFWGHZPGHCVRWYSNFUSPPETRJSIIZSAAOYLNEENGHYAMAZBYSMNSJRNGZGSEZLNGHTSTJMNSJRESFRPGQPSYFGSW" \
+             "ZMBGQFBCCEZTTPOYNIVUJRVSZSCYSEYJWYHUJRVSZSCRNECPFHHZJBUHDHSNNZQKADMGFBPGBZUNVFIGNWLGCWSATVSSWWPGZH" \
+             "NETEBEJFBCZDPYJWOSFDVWOTANCZIHCYIMJSIGFQLYNZZSETSYSEUMHRLAAGSEFUSKBZUEJQVTDZVCFHLAAJSFJSCNFSJKCFBC" \
+             "FSPITQHZJLBMHECNHFHGNZIEWBLGNFMHNMHMFSVPVHSGGMBGCWSEZSZGSEPFQEIMQEZZJIOGPIOMNSSOFWSKCRLAAGSKNEAHBB" \
+             "SKKEVTZSSOHEUTTQYMCPHZJFHGPZQOZHLCFSVYNFYYSEZGNTVRAJVTEMPADZDSVHVYJWHGQFWKTSNYHTSZFYHMAEJMNLNGFQNF" \
+             "ZWSKCCJHPEHZZSZGDZDSVHVYJWHGQFWKTSNYHTSZFYHMAEDNJZQAZSCHPYSKXLHMQZNKOIOKHYMKKEIKCGSGYBPHPECKCJJKNI" \
+             "STJJZMHTVRHQSGQMBWHTSPTHSNFQZKPRLYSZDYPEMGZILSDIOGGMNYZVSNHTAYGFBZZYJKQELSJXHGCJLSDTLNEHLYZHVRCJHZ" \
+             "TYWAFGSHBZDTNRSESZVNJIVWFIVYSEJHFSLSHTLNQEIKQEASQJVYSEVYSEUYSMBWNSVYXEIKWYSYSEYKPESKNCGRHGSEZLNGHT" \
+             "SIZHSZZHCUJWARNEHZZIWHZDZMADNGPNSYFZUWZSLXJFBCGEANWHSYSEGGNIVPFLUGCEUWTENKCJNVTDPNXEIKWYSYSFHESFPA" \
+             "JSWGTYVSJIOKHRSKPEZMADLSDIVKKWSFHZBGEEATJLBOTDPMCPHHVZNYVZBGZSCHCEZZTWOOJMBYJSCYFRLSZSCYSEVYSEUNHZ" \
+             "VHRFBCCZZYSEUGZDCGZDGMHDYNAFNZHTUGJJOEZBLYZDHYSHSGJMWZHWAFTIAAY"
+    key_length = RepeatingKeyXorAttacker.get_key_length(bytearray(task_4.lower().encode()))
+    SubstitutionAttacker(individual_set_members_count=key_length,
+                         min_population_size=100,
+                         max_population_size=1000,
+                         iterations_count=2000,
+                         mutations_percentage=0.4,
+                         best_percentage=30).attack(task_4)
+    task_4_b = bytearray(task_4.lower().encode())
+    keys_b = [bytearray(b'fxplstobqzywraihknjcdgemvu'), bytearray(b'vkhgsroezacyutfjnwdixmlpbq'),
+              bytearray(b'vrmaseubojgcinldfzphwqykxt'), bytearray(b'khqemfpwuxlabgzovstryindcj')]
+    key_set = IndividualSet(Individual)
+    for key in keys_b:
+        key_set.append(Individual(key))
+    print(f"Found keys: {keys_b} with fitness {key_set.calc_fitness(task_4_b)}")
+    print(f"Found text: {Substitution(ALPHABET).decrypt(task_4_b, keys_b)}")
+
+
+if __name__ == '__main__':
+    # TASK 1
+    execute_task_1()
+
+    # TASK 2
+    execute_task_2()
+
+    # TASK 3
+    execute_task_3()
+
+    # TASK 4
+    execute_task_4()

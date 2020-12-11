@@ -41,7 +41,6 @@ class RepeatingKeyXorAttacker:
                     new_key = [part_key]
                     new_possible_keys.append(new_key)
             possible_keys = new_possible_keys
-        print(possible_keys)
         return [bytearray(key) for key in possible_keys]
 
     @staticmethod
