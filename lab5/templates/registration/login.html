@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+    <script src="{% static 'login.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.2.0/sha256.js"></script>
+{% endblock %}
+
+{% block badge %}
+ Login Form
+{% endblock badge %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login" class="btn btn-primary">
+    <br><br>
+    <p>Don't have an account ?
+    <a href="{% url 'registration' %}">Sign Up</a>
+    </p>
+</form>
+{% endblock content %}

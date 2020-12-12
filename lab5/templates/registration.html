@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+    {% csrf_token %}
+    <script>
+        const registrationUrl = "{% url 'registration' %}";
+        const csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    </script>
+    <script src="{% static 'registration.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.2.0/sha1.js"></script>
+    <script>
+        jsSHA1 = jsSHA;
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.2.0/sha256.js"></script>
+    <script>
+        jsSHA256 = jsSHA;
+    </script>
+{% endblock %}
+{% block styles %}
+    <style>
+        meter {
+          margin: 0 auto 1em;
+          width: 100%;
+          height: 0.5em;
+        }
+        img {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block badge %}
+Registration Form
+{% endblock badge %}
+{% block content %}
+<form action="." method="POST">
+    {% csrf_token %}
+    <p>Have an account ?
+        <a href="{% url 'login' %}">Log In</a>
+    </p>
+    {{ form.as_p }}
+    <meter min="0" low="0" high="3" max="3" id="password-strength-meter"></meter>
+    <div id="password-strength-text"></div>
+    <input type="submit" value="Signup" class="btn btn-primary">
+    <br><br>
+
+</form>
+{% endblock content %}
