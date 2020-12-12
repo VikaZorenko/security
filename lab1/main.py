@@ -38,12 +38,12 @@ def execute_task_3():
              "YFVIVFLPQLOLSSEDLVWHEUPSKCPQLWAOKLUYGMQEUEMPLUSVWENLCEWFEHHTCGULXALWMCEWETCSVSPYLEMQYGPQLOMEWCYAGV" \
              "WFEBECPYASLQVDQLUYUFLUGULXALWMCSPEPVSPVMSBVPQPQVSPCHLYGMVHQLUPQLWLRPOEDVMETBYUFBVTTPENLPYPQLWLRPTE" \
              "KLWZYCKVPTCSTESQPQULLGYAUMEHVPETFWMEHVPETBZMEHVPETB"
-    SubstitutionAttacker(individual_set_members_count=1,
-                         min_population_size=100,
-                         max_population_size=1000,
-                         iterations_count=500,
-                         mutations_percentage=0.4,
-                         best_percentage=30).attack(task_3)
+    # SubstitutionAttacker(individual_set_members_count=1,
+    #                      min_population_size=100,
+    #                      max_population_size=1000,
+    #                      iterations_count=500,
+    #                      mutations_percentage=0.4,
+    #                      best_percentage=30).attack(task_3)
     task_3_b = bytearray(task_3.lower().encode())
     keys_b = [bytearray('ekmflgdqvzntowyhxuspaibrcj'.encode())]
     key_set = IndividualSet(Individual)
@@ -68,28 +68,28 @@ def execute_task_4():
              "JSWGTYVSJIOKHRSKPEZMADLSDIVKKWSFHZBGEEATJLBOTDPMCPHHVZNYVZBGZSCHCEZZTWOOJMBYJSCYFRLSZSCYSEVYSEUNHZ" \
              "VHRFBCCZZYSEUGZDCGZDGMHDYNAFNZHTUGJJOEZBLYZDHYSHSGJMWZHWAFTIAAY"
     key_length = RepeatingKeyXorAttacker.get_key_length(bytearray(task_4.lower().encode()))
-    SubstitutionAttacker(individual_set_members_count=key_length,
-                         min_population_size=100,
-                         max_population_size=1000,
-                         iterations_count=2000,
-                         mutations_percentage=0.4,
-                         best_percentage=30).attack(task_4)
+    # SubstitutionAttacker(individual_set_members_count=key_length,
+    #                      min_population_size=100,
+    #                      max_population_size=1000,
+    #                      iterations_count=5000,
+    #                      mutations_percentage=0.4,
+    #                      best_percentage=30).attack(task_4)
     task_4_b = bytearray(task_4.lower().encode())
-    keys_b = [bytearray(b'fxplstobqzywraihknjcdgemvu'), bytearray(b'vkhgsroezacyutfjnwdixmlpbq'),
-              bytearray(b'vrmaseubojgcinldfzphwqykxt'), bytearray(b'khqemfpwuxlabgzovstryindcj')]
+    keys_b = [bytearray(b'ampkzedsjibvxfctlqnhwyougr'), bytearray(b'iubhzcqtrxndwjepksyflgmvoa'), 
+              bytearray(b'hmwcsuqbareodzgyknvljtixpf'), bytearray(b'gtozyucasqvhrknjbefmwxilpd')]
     key_set = IndividualSet(Individual)
     for key in keys_b:
         key_set.append(Individual(key))
     print(f"Found keys: {keys_b} with fitness {key_set.calc_fitness(task_4_b)}")
     print(f"Found text: {Substitution(ALPHABET).decrypt(task_4_b, keys_b)}")
 
-
+ 
 if __name__ == '__main__':
-    # TASK 1
-    execute_task_1()
+    # # TASK 1
+    # execute_task_1()
 
-    # TASK 2
-    execute_task_2()
+    # # TASK 2
+    # execute_task_2()
 
     # TASK 3
     execute_task_3()
